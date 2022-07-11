@@ -1,7 +1,7 @@
 local httpService = game:GetService('HttpService')
 
 local SaveManager = {} do
-	SaveManager.Folder = 'Luke's Hub'
+	SaveManager.Folder = "Luke's Hub"
 	SaveManager.Ignore = {}
 	SaveManager.Parser = {
 		Toggle = {
