@@ -95,4 +95,5 @@ local ThemeManager = {} do
 		self:CreateThemeManager(groupbox)
 	end
 end
+
 return ThemeManager
