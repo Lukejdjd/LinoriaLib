@@ -1,4 +1,4 @@
-local HttpService = game:GetService("HttpService")
+local httpService = game:GetService('HttpService')
 
 local SaveManager = {} do
 	SaveManager.Folder = "Luke's Hub"
@@ -6,7 +6,7 @@ local SaveManager = {} do
 	SaveManager.Parser = {
 		Toggle = {
 			Save = function(idx, object) 
-				return { type = "Toggle", idx = idx, value = object.Value } 
+				return { type = 'Toggle', idx = idx, value = object.Value } 
 			end,
 			Load = function(idx, data)
 				if Toggles[idx] then 
@@ -16,7 +16,7 @@ local SaveManager = {} do
 		},
 		Slider = {
 			Save = function(idx, object)
-				return { type = "Slider", idx = idx, value = tostring(object.Value) }
+				return { type = 'Slider', idx = idx, value = tostring(object.Value) }
 			end,
 			Load = function(idx, data)
 				if Options[idx] then 
@@ -26,7 +26,7 @@ local SaveManager = {} do
 		},
 		Dropdown = {
 			Save = function(idx, object)
-				return { type = "Dropdown", idx = idx, value = object.Value, mutli = object.Multi }
+				return { type = 'Dropdown', idx = idx, value = object.Value, mutli = object.Multi }
 			end,
 			Load = function(idx, data)
 				if Options[idx] then 
@@ -36,7 +36,7 @@ local SaveManager = {} do
 		},
 		ColorPicker = {
 			Save = function(idx, object)
-				return { type = "ColorPicker", idx = idx, value = object.Value:ToHex() }
+				return { type = 'ColorPicker', idx = idx, value = object.Value:ToHex() }
 			end,
 			Load = function(idx, data)
 				if Options[idx] then 
@@ -46,7 +46,7 @@ local SaveManager = {} do
 		},
 		KeyPicker = {
 			Save = function(idx, object)
-				return { type = "KeyPicker", idx = idx, mode = object.Mode, key = object.Value }
+				return { type = 'KeyPicker', idx = idx, mode = object.Mode, key = object.Value }
 			end,
 			Load = function(idx, data)
 				if Options[idx] then 
@@ -63,7 +63,7 @@ local SaveManager = {} do
 	end
 
 	function SaveManager:Save(name)
-		local fullPath = self.Folder .. "/" .. name .. ".json"
+		local fullPath = self.Folder .. '/' .. name .. '.json'
 
 		local data = {
 			objects = {}
@@ -82,9 +82,9 @@ local SaveManager = {} do
 			table.insert(data.objects, self.Parser[option.Type].Save(idx, option))
 		end	
 
-		local success, encoded = pcall(HttpService.JSONEncode, HttpService, data)
+		local success, encoded = pcall(httpService.JSONEncode, httpService, data)
 		if not success then
-			return false, "failed to encode data"
+			return false, 'failed to encode data'
 		end
 
 		writefile(fullPath, encoded)
@@ -92,11 +92,11 @@ local SaveManager = {} do
 	end
 
 	function SaveManager:Load(name)
-		local file = self.Folder .. "/" .. name .. ".json"
-		if not isfile(file) then return false, "invalid file" end
+		local file = self.Folder .. '/' .. name .. '.json'
+		if not isfile(file) then return false, 'invalid file' end
 
-		local success, decoded = pcall(HttpService.JSONDecode, HttpService, readfile(file))
-		if not success then return false, "decode error" end
+		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
+		if not success then return false, 'decode error' end
 
 		for _, option in next, decoded.objects do
 			if self.Parser[option.type] then
@@ -106,18 +106,18 @@ local SaveManager = {} do
 
 		return true
 	end
-
+    
 	function SaveManager:IgnoreThemeSettings()
 		self:SetIgnoreIndexes({ 
 			"BackgroundColor", "MainColor", "AccentColor", "OutlineColor", "FontColor", -- themes
-			"ThemeManager_ThemeList", "ThemeManager_CustomThemeList", "ThemeManager_CustomThemeName", -- themes
+			"ThemeManager_ThemeList", 'ThemeManager_CustomThemeList', 'ThemeManager_CustomThemeName', -- themes
 		})
 	end
 
 	function SaveManager:SetLibrary(library)
 		self.Library = library
 	end
-
+    
 	makefolder(SaveManager.Folder)
 end
 
