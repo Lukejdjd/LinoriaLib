@@ -1,4 +1,4 @@
-local httpService = game:GetService("HttpService")
+local HttpService = game:GetService("HttpService")
 
 local SaveManager = {} do
 	SaveManager.Folder = "Luke's Hub"
@@ -82,7 +82,7 @@ local SaveManager = {} do
 			table.insert(data.objects, self.Parser[option.Type].Save(idx, option))
 		end	
 
-		local success, encoded = pcall(httpService.JSONEncode, httpService, data)
+		local success, encoded = pcall(HttpService.JSONEncode, HttpService, data)
 		if not success then
 			return false, "failed to encode data"
 		end
@@ -95,7 +95,7 @@ local SaveManager = {} do
 		local file = self.Folder .. "/" .. name .. ".json"
 		if not isfile(file) then return false, "invalid file" end
 
-		local success, decoded = pcall(httpService.JSONDecode, httpService, readfile(file))
+		local success, decoded = pcall(HttpService.JSONDecode, HttpService, readfile(file))
 		if not success then return false, "decode error" end
 
 		for _, option in next, decoded.objects do
