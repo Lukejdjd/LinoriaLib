@@ -2,6 +2,7 @@ local httpService = game:GetService("HttpService")
 
 local SaveManager = {} do
 	SaveManager.Folder = "Luke's Hub"
+	if not isfolder(SaveManager.Folder) then makefolder(SaveManager.Folder) end
 	SaveManager.Ignore = {}
 	SaveManager.Parser = {
 		Toggle = {
